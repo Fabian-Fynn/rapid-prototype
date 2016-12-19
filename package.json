@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run copy && babel src/js --watch --out-dir dist/js",
+    "start": "watch -p 'src/**/*' -c 'npm run babel && npm run copy'",
+    "babel": "babel src --out-dir dist",
     "copy": "cp src/index.html src/select.html src/map.html dist"
   },
   "repository": {
@@ -21,6 +22,7 @@
   "dependencies": {
     "babel": "^6.5.2",
     "babel-cli": "^6.18.0",
-    "babel-preset-es2015": "^6.18.0"
+    "babel-preset-es2015": "^6.18.0",
+    "watch-cli": "^0.2.1"
   }
 }
