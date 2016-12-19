@@ -3,14 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Onboarding</title>
+
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="dragula.min.css">
+
 </head>
 <body>
+
+    <div id="left" style="background: red; padding:40px;">
+        <li>left</li>
+    </div>
+
+    <div id="right"  style="background: blue; padding:40px;">
+        <li>right</li>
+    </div>
+
     <script src="assets/js/jquery-3.1.1.min.js"></script>
     <script src="assets/js/hammer.min.js"></script>
+    <script src="assets/js/dragula.min.js"></script>
     <script>
         $(document).ready(function () {
             console.log($)
         });
+        dragula([document.querySelector('#left'), document.querySelector('#right')]);
     </script>
 </body>
 </html>
