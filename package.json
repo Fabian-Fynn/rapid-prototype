@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run copy && babel src --watch --out-dir dist",
-    "copy": "cp src/index.html src/index2.html src/index3.html dist"
+    "start": "npm run copy && babel src/js --watch --out-dir dist/js",
+    "copy": "cp src/index.html src/select.html src/map.html dist"
   },
   "repository": {
     "type": "git",
