@@ -1,4 +1,15 @@
-.list-item {
-  width: 100px;
+.wrapper-activity-bar {
+  position: fixed;
+  bottom: 0;
+}
+
+.activity-icon {
+  width: 15vw;
   height: auto;
+}
+
+.list-item {
+    list-style-type: none;
+    float: left;
+    padding: 15px;
 }
