@@ -61,7 +61,7 @@
         prefs[pref.id] = pref.checked;
       });
 
-      DB.createUser({name, prefs}, function(err){
+      DB.createUser({name, prefs, lat: 0, lng: 0}, function(err){
         if(err){
           alert(err);
         } else {
@@ -94,13 +94,13 @@
     });
 
     //Get users by pref
-    DB.getUsersByPref('-KZQpN9qrdiEMESYmsHj', function(users) {
+    DB.getUsersByPref('-KZQpS72sYzV64D7Z3Xk', function(users) {
       console.log('filtered users', users);
     });
 
   </script>
   <script>
-    getLocation();
+//    getLocation();
     function getLocation() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);

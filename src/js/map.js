@@ -1,29 +1,42 @@
+let markers = [];
+let map;
+
 DB.init();
-var map;
-var markers = [];
 
-function addMarker(user) {
-    var marker = new google.maps.Marker({
-        position: {
-            lat: user.lat,
-            lng: user.lng
-        },
-        map: map,
-        animation: google.maps.Animation.DROP,
-        title: 'User: ' + user
+const addMarker = user => {
+    const chosenPreference = localStorage.getItem('prefid');
+    const markerSize = 30;
 
+    DB.getAllPrefs(prefs => {
+        const image = {
+            url: `assets/icons/${chosenPreference}.png`,
+            size: new google.maps.Size(markerSize, markerSize),
+            origin: new google.maps.Point(0, 0),
+            scaledSize: new google.maps.Size(markerSize, markerSize),
+        };
+        const marker = new google.maps.Marker({
+            position: {
+                lat: user.lat,
+                lng: user.lng
+            },
+            map: map,
+            animation: google.maps.Animation.DROP,
+            title: 'User: ' + user,
+            icon: image
+        });
+
+        markers.push(marker);
     });
-    markers.push(marker);
-}
 
-DB.getAllUsers(function(users) {
-  for (var idx in users) {
-    console.log(users[idx].lat);
-    addMarker(users[idx]);
-  }
+};
+
+DB.getAllUsers(users => {
+    for (let idx in users) {
+        addMarker(users[idx]);
+    }
 });
 
-function initMap() {
+const initMap = () => {
     var myLatLng = {
         lat: 47.722942,
         lng: 13.089094
@@ -35,9 +48,7 @@ function initMap() {
         zoom: 16
     });
 
-    map.setOptions({
-      styles: map_style
-    });
+    map.setOptions({ styles });
 
     // // Try HTML5 geolocation.
     // if (navigator.geolocation) {
@@ -59,7 +70,7 @@ function initMap() {
     // }
 }
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+const handleLocationError = (browserHasGeolocation, infoWindow, pos) => {
     infoWindow.setPosition(pos);
     infoWindow.setContent(browserHasGeolocation ?
         'Error: The Geolocation service failed.' :

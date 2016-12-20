@@ -35,7 +35,13 @@ DB.getUserById(localStorage.getItem('userid'), function (user) {
 
 
   DB.getUsersByPref('-KZQpN9qrdiEMESYmsHj', function(users) {
-    console.log('filtered users', users);
+    let count = 0;
+    for (let user in users){
+
+      console.log(user);
+
+      count++;
+    }
   });
 
 

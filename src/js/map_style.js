@@ -1,4 +1,4 @@
-const map_style = [
+const styles = [
   {
     "featureType": "poi",
     "elementType": "labels.text.fill",

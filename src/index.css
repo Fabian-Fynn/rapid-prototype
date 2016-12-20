@@ -104,3 +104,10 @@ body {
     color: #111;
     background: #666;
 }
+
+input.name {
+    width: 100%;
+    font-size:1.5em;
+    padding: 20px;
+    box-sizing: border-box;
+}
