@@ -80,6 +80,17 @@ const DB = {
       });
     });
   },
+  getUsersByPref: function(pref, callback) {
+    DB.getAllUsers(function(users) {
+      const relevantUsers = {};
+      for (let u in users) {
+        const user = users[u];
+        if (user.prefs.hasOwnProperty(pref)) {
+          relevantUsers[u] = user;
+        }
+      }
+    });
+  },
   requestAllUsers: function(callback) {
     this.firebaseDB.ref('/users/').once('value').then(function(snapshot) {
       const users = snapshot.val();

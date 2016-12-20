@@ -87,9 +87,15 @@
     DB.getUserById('-KZQpebXksIlPv3PZo5w', function(user) {
       console.log(user);
     });
+
     //Get all users
     DB.getAllUsers(function(users) {
       console.log(users);
+    });
+
+    //Get users by pref
+    DB.getUsersByPref('-KZQpN9qrdiEMESYmsHj', function(user) {
+      console.log('filtered users', users);
     });
 
   </script>
