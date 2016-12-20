@@ -1,6 +1,8 @@
 let markers = [];
 let map;
 const chosenPreference = localStorage.getItem('prefid');
+const userId = localStorage.getItem('userid');
+console.log(userId)
 
 DB.init();
 
@@ -31,8 +33,9 @@ const addMarker = user => {
 
 DB.getUsersByPref(chosenPreference, users => {
     for (let idx in users) {
-        console.log(users[idx]);
+      if(users[idx].id != userId){
         addMarker(users[idx]);
+      }
     }
 });
 
