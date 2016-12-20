@@ -24,7 +24,7 @@ const addMarker = user => {
             map: map,
             animation: google.maps.Animation.DROP,
             title: 'User: ' + user.username,
-            icon: image
+            icon: image,
             class: "my-marker-style"
         });
         if(markers.length > 0){
