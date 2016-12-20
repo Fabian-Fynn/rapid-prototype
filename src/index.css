@@ -98,6 +98,7 @@ body {
     font-size: 1.5em;
     color: #fff;
     border: none;
+    z-index: 1;
 }
 
 .submit:disabled {
@@ -110,4 +111,5 @@ input.name {
     font-size:1.5em;
     padding: 20px;
     box-sizing: border-box;
+    z-index: 1000;
 }
