@@ -7,14 +7,11 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="index.css">
-    <style>
-        .draggable {
-            touch-action: none;
-        }
-    </style>
 </head>
 
 <body>
+
+    Please select <span class="count"></span> elements:
 
     <div id="outer-dropzone" class="dropzone"></div>
 
@@ -126,7 +123,7 @@ interact('.draggable')
       // add to selected
       if(event.hasOwnProperty('dropzone')) {
         selected.push(id);
-        alert(selected);
+        alert(selected)
       } else {
         // remove from selected
         let idx = selected.indexOf(id);

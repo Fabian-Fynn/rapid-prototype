@@ -1,11 +1,7 @@
-.wrapper-activity-bar {
-    position: fixed;
-    bottom: 0;
-}
-
 .activity-icon {
     width: 15vw;
-    height: auto;
+    height: 15vw;
+    transition: width 0.5s, height 0.5s;
 }
 
 .list-item {
