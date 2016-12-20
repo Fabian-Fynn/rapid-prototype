@@ -90,9 +90,7 @@ const DB = {
       for (let u in users) {
         const user = users[u];
         for (let p=0; p < user.prefs.length; p++) {
-          console.log('p', user.prefs[p]);
           if (user.prefs[p].id === pref) {
-            console.log('here');
             relevantUsers[u] = user;
           }
         }
