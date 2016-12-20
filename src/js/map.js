@@ -28,12 +28,19 @@ const addMarker = user => {
             icon: image,
             class: "my-marker-style"
         });
-        if (markers.length > 0) {
-            markers[markers.length - 1].addListener('click', toggleBounce);
-            markers[markers.length - 1].addListener('click', function(event) {
-              chosenUser[user.id] = user;
-            });
-        }
+        // if (markers.length > 0) {
+        //   console.log(markers)
+        //   console.log(markers.length)
+        //   console.log(markers.length - 1)
+        //     markers[markers.length - 1].addListener('click', toggleBounce);
+        //     markers[markers.length - 1].addListener('click', function(event) {
+        //       chosenUser[user.id] = user;
+        //     });
+        // }
+        marker.addListener('click', toggleBounce);
+        marker.addListener('click', function(event) {
+          chosenUser[user.id] = user;
+        });
         markers.push(marker);
     });
 
