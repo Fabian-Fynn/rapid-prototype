@@ -30,7 +30,9 @@ const DB = {
     if (err === '') {
       this.firebaseRef.child('users').push({
         username: options.name,
-        prefs: options.prefs
+        prefs: options.prefs,
+        lat: options.lat,
+        lng: options.lng
       });
       callback(null);
     } else {
