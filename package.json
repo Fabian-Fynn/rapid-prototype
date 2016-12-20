@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run babel && npm run copy && watch -p 'src/**/*' -c 'npm run babel && npm run copy'",
     "babel": "babel src --out-dir dist",
-    "copy": "cpy src/**/*.html src/**/*.css dist && cpy src/assets/icons/* dist/assets/icons && cpy src/assets/images/* dist/assets/images"
+    "copy": "cpy src/**/*.html src/**/*.css dist && cp -r src/assets/ dist/assets/"
   },
   "repository": {
     "type": "git",
