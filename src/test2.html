@@ -8,14 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="test.css">
     <link rel="stylesheet" type="text/css" href="index.css">
-    <style>
-      .activity-container {
-        background-color: darkgray;
-        float: left;
-        width: 15vw;
-        height: 15vw;
-      }
-    </style>
 </head>
 <body id="body">
 
@@ -29,7 +21,7 @@
 
   <div id="outer-dropzone" class="dropzone"></div>
 
-    <ul class="wrapper-activity-bar container-icon">
+    <div class="wrapper-activity-bar container-icon">
         <!-- <img class="activity-icon" src="assets/icons/01_Sports.png" alt="Icon Sports" data-id="1" />
         <img class="activity-icon" src="assets/icons/02_Netflix_and_Chill.png" alt="Icon Netflix & Chill" data-id="2" />
         <img class="activity-icon" src="assets/icons/03_Drink.ico" alt="Icon Drink" data-id="3" />
@@ -40,7 +32,7 @@
         <img class="activity-icon" src="assets/icons/08_Shopping.png" alt="Icon Shopping" data-id="8" />
         <img class="activity-icon" src="assets/icons/09_Party.ico" alt="Icon Party" data-id="9" />
         <img class="activity-icon" src="assets/icons/10_Coffee.png" alt="Icon Coffee" data-id="10" />-->
-    </ul>
+    </div>
 
   <button class="submit" disabled>
     Submit
@@ -199,7 +191,7 @@
   DB.getAllPrefs(function(prefs) {
 
     for(key in prefs) {
-      $('.container-icon').append('<img class="activity-icon" src="assets/icons/'+key+'.png" alt="'+prefs[key].name+'" data-id="'+key+'" />');
+      $('.container-icon').append('<div class="activity-container"><img class="activity-icon" src="assets/icons/'+key+'.png" alt="'+prefs[key].name+'" data-id="'+key+'" /></div>');
     };
 
     document.querySelectorAll('img').forEach(function(item) {
