@@ -1,0 +1,381 @@
+
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="utf-8">
+    <title>interact.js - JavaScript drag and drop, resizing and gestures with inertia and snapping</title>
+    <meta name="author" content="" />
+    <base href="http://interactjs.io" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Custom CSS -->
+    <link href="/stylesheets/main.css" rel="stylesheet" type="text/css" media="screen" />
+    <script src="//code.interactjs.io/v1.2.6/interact.min.js"></script>
+
+        <script src="/javascripts/underscore-min.js" type="text/javascript"></script>
+        <script src="/javascripts/livedemo.js" type="text/javascript"></script>
+
+</head>
+<body>
+
+<div id="demos">
+    <div id="basic-drag" class="demo-area">
+
+        <input id="demo-2-html" type="radio" name="demo-2" hidden>
+        <label class="html-label" for="demo-2-html"> HTML </label>
+        <div class="html-code">
+<pre class="highlight html"><code><span class="c">&lt;!-- enable javascript to view a demo --&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"drag-1"</span> <span class="na">class=</span><span class="s">"draggable"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;p&gt;</span> You can drag one element <span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"drag-2"</span> <span class="na">class=</span><span class="s">"draggable"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;p&gt;</span> with each pointer <span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre>
+        </div>
+
+        <input id="demo-2-css" type="radio" name="demo-2" hidden>
+        <label class="css-label" for="demo-2-css"> CSS </label>
+        <div class="css-code">
+<pre class="highlight css"><code><span class="c">/* enable javascript to view a demo */</span>
+<span class="nf">#drag-1</span><span class="o">,</span> <span class="nf">#drag-2</span> <span class="p">{</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">25%</span><span class="p">;</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="nl">min-height</span><span class="p">:</span> <span class="m">6.5em</span><span class="p">;</span>
+  <span class="nl">margin</span><span class="p">:</span> <span class="m">10%</span><span class="p">;</span>
+
+  <span class="nl">background-color</span><span class="p">:</span> <span class="m">#29e</span><span class="p">;</span>
+  <span class="nl">color</span><span class="p">:</span> <span class="no">white</span><span class="p">;</span>
+
+  <span class="nl">border-radius</span><span class="p">:</span> <span class="m">0.75em</span><span class="p">;</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">4%</span><span class="p">;</span>
+
+  <span class="nl">-webkit-transform</span><span class="p">:</span> <span class="n">translate</span><span class="p">(</span><span class="m">0px</span><span class="p">,</span> <span class="m">0px</span><span class="p">);</span>
+          <span class="nl">transform</span><span class="p">:</span> <span class="n">translate</span><span class="p">(</span><span class="m">0px</span><span class="p">,</span> <span class="m">0px</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nf">#drag-me</span><span class="nd">::before</span> <span class="p">{</span>
+  <span class="nl">content</span><span class="p">:</span> <span class="s1">"#"</span> <span class="n">attr</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+  <span class="nl">font-weight</span><span class="p">:</span> <span class="nb">bold</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+        </div>
+
+        <input id="demo-2-js" type="radio" name="demo-2" hidden checked>
+        <label class="js-label" for="demo-2-js"> JS </label>
+        <div class="js-code">
+<pre class="highlight javascript"><code><span class="cm">/* enable javascript to view a demo */</span>
+<span class="c1">// target elements with the "draggable" class</span>
+<span class="nx">interact</span><span class="p">(</span><span class="s1">'.draggable'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">draggable</span><span class="p">({</span>
+    <span class="c1">// enable inertial throwing</span>
+    <span class="na">inertia</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="c1">// keep the element within the area of it's parent</span>
+    <span class="na">restrict</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">restriction</span><span class="p">:</span> <span class="s2">"parent"</span><span class="p">,</span>
+      <span class="na">endOnly</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="na">elementRect</span><span class="p">:</span> <span class="p">{</span> <span class="na">top</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">left</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">bottom</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">right</span><span class="p">:</span> <span class="mi">1</span> <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="c1">// enable autoScroll</span>
+    <span class="na">autoScroll</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+
+    <span class="c1">// call this function on every dragmove event</span>
+    <span class="na">onmove</span><span class="p">:</span> <span class="nx">dragMoveListener</span><span class="p">,</span>
+    <span class="c1">// call this function on every dragend event</span>
+    <span class="na">onend</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">textEl</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">'p'</span><span class="p">);</span>
+
+      <span class="nx">textEl</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">textEl</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span>
+        <span class="s1">'moved a distance of '</span>
+        <span class="o">+</span> <span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">sqrt</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">dx</span> <span class="o">*</span> <span class="nx">event</span><span class="p">.</span><span class="nx">dx</span> <span class="o">+</span>
+                     <span class="nx">event</span><span class="p">.</span><span class="nx">dy</span> <span class="o">*</span> <span class="nx">event</span><span class="p">.</span><span class="nx">dy</span><span class="p">)</span><span class="o">|</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'px'</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+
+  <span class="kd">function</span> <span class="nx">dragMoveListener</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">target</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">,</span>
+        <span class="c1">// keep the dragged position in the data-x/data-y attributes</span>
+        <span class="nx">x</span> <span class="o">=</span> <span class="p">(</span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">target</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">'data-x'</span><span class="p">))</span> <span class="o">||</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="nx">event</span><span class="p">.</span><span class="nx">dx</span><span class="p">,</span>
+        <span class="nx">y</span> <span class="o">=</span> <span class="p">(</span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">target</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">'data-y'</span><span class="p">))</span> <span class="o">||</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="nx">event</span><span class="p">.</span><span class="nx">dy</span><span class="p">;</span>
+
+    <span class="c1">// translate the element</span>
+    <span class="nx">target</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">webkitTransform</span> <span class="o">=</span>
+    <span class="nx">target</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">transform</span> <span class="o">=</span>
+      <span class="s1">'translate('</span> <span class="o">+</span> <span class="nx">x</span> <span class="o">+</span> <span class="s1">'px, '</span> <span class="o">+</span> <span class="nx">y</span> <span class="o">+</span> <span class="s1">'px)'</span><span class="p">;</span>
+
+    <span class="c1">// update the posiion attributes</span>
+    <span class="nx">target</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">'data-x'</span><span class="p">,</span> <span class="nx">x</span><span class="p">);</span>
+    <span class="nx">target</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">'data-y'</span><span class="p">,</span> <span class="nx">y</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="c1">// this is used later in the resizing and gesture demos</span>
+  <span class="nb">window</span><span class="p">.</span><span class="nx">dragMoveListener</span> <span class="o">=</span> <span class="nx">dragMoveListener</span><span class="p">;</span>
+</code></pre>
+        </div>
+
+        <input id="demo-2-demo" type="radio" name="demo-2" hidden>
+        <label class="demo-label" for="demo-2-demo"> Demo only </label>
+    </div>
+    <h1 id="drag-and-drop"> Drag and drop </h1>
+    <div id="drag-drop-demo" class="demo-area">
+
+        <input id="demo-5-html" type="radio" name="demo-5" hidden>
+        <label class="html-label" for="demo-5-html"> HTML </label>
+        <div class="html-code">
+<pre class="highlight html"><code><span class="c">&lt;!-- enable javascript to view a demo --&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"no-drop"</span> <span class="na">class=</span><span class="s">"draggable drag-drop"</span><span class="nt">&gt;</span> #no-drop <span class="nt">&lt;/div&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"yes-drop"</span> <span class="na">class=</span><span class="s">"draggable drag-drop"</span><span class="nt">&gt;</span> #yes-drop <span class="nt">&lt;/div&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"outer-dropzone"</span> <span class="na">class=</span><span class="s">"dropzone"</span><span class="nt">&gt;</span>
+  #outer-dropzone
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"inner-dropzone"</span> <span class="na">class=</span><span class="s">"dropzone"</span><span class="nt">&gt;</span>#inner-dropzone<span class="nt">&lt;/div&gt;</span>
+ <span class="nt">&lt;/div&gt;</span>
+</code></pre>
+        </div>
+
+        <input id="demo-5-css" type="radio" name="demo-5" hidden>
+        <label class="css-label" for="demo-5-css"> CSS </label>
+        <div class="css-code">
+<pre class="highlight css"><code><span class="c">/* enable javascript to view a demo */</span>
+<span class="nf">#outer-dropzone</span> <span class="p">{</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="m">140px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nf">#inner-dropzone</span> <span class="p">{</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="m">80px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.dropzone</span> <span class="p">{</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="m">#ccc</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="nb">dashed</span> <span class="m">4px</span> <span class="nb">transparent</span><span class="p">;</span>
+  <span class="nl">border-radius</span><span class="p">:</span> <span class="m">4px</span><span class="p">;</span>
+  <span class="nl">margin</span><span class="p">:</span> <span class="m">10px</span> <span class="nb">auto</span> <span class="m">30px</span><span class="p">;</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">80%</span><span class="p">;</span>
+  <span class="nl">transition</span><span class="p">:</span> <span class="n">background-color</span> <span class="m">0.3s</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.drop-active</span> <span class="p">{</span>
+  <span class="nl">border-color</span><span class="p">:</span> <span class="m">#aaa</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.drop-target</span> <span class="p">{</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="m">#29e</span><span class="p">;</span>
+  <span class="nl">border-color</span><span class="p">:</span> <span class="m">#fff</span><span class="p">;</span>
+  <span class="nl">border-style</span><span class="p">:</span> <span class="nb">solid</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.drag-drop</span> <span class="p">{</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="n">inline-block</span><span class="p">;</span>
+  <span class="nl">min-width</span><span class="p">:</span> <span class="m">40px</span><span class="p">;</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">2em</span> <span class="m">0.5em</span><span class="p">;</span>
+
+  <span class="nl">color</span><span class="p">:</span> <span class="m">#fff</span><span class="p">;</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="m">#29e</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="nb">solid</span> <span class="m">2px</span> <span class="m">#fff</span><span class="p">;</span>
+
+  <span class="nl">-webkit-transform</span><span class="p">:</span> <span class="n">translate</span><span class="p">(</span><span class="m">0px</span><span class="p">,</span> <span class="m">0px</span><span class="p">);</span>
+          <span class="nl">transform</span><span class="p">:</span> <span class="n">translate</span><span class="p">(</span><span class="m">0px</span><span class="p">,</span> <span class="m">0px</span><span class="p">);</span>
+
+  <span class="nl">transition</span><span class="p">:</span> <span class="n">background-color</span> <span class="m">0.3s</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.drag-drop.can-drop</span> <span class="p">{</span>
+  <span class="nl">color</span><span class="p">:</span> <span class="m">#000</span><span class="p">;</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="m">#4e4</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+        </div>
+
+        <input id="demo-5-js" type="radio" name="demo-5" hidden checked>
+        <label class="js-label" for="demo-5-js"> JS </label>
+        <div class="js-code">
+<pre class="highlight javascript"><code><span class="cm">/* enable javascript to view a demo */</span>
+<span class="cm">/* The dragging code for '.draggable' from the demo above
+ * applies to this demo as well so it doesn't have to be repeated. */</span>
+
+<span class="c1">// enable draggables to be dropped into this</span>
+<span class="nx">interact</span><span class="p">(</span><span class="s1">'.dropzone'</span><span class="p">).</span><span class="nx">dropzone</span><span class="p">({</span>
+  <span class="c1">// only accept elements matching this CSS selector</span>
+  <span class="na">accept</span><span class="p">:</span> <span class="s1">'#yes-drop'</span><span class="p">,</span>
+  <span class="c1">// Require a 75% element overlap for a drop to be possible</span>
+  <span class="na">overlap</span><span class="p">:</span> <span class="mf">0.75</span><span class="p">,</span>
+
+  <span class="c1">// listen for drop related events:</span>
+
+  <span class="na">ondropactivate</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// add active dropzone feedback</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">'drop-active'</span><span class="p">);</span>
+  <span class="p">},</span>
+  <span class="na">ondragenter</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">draggableElement</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">relatedTarget</span><span class="p">,</span>
+        <span class="nx">dropzoneElement</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">;</span>
+
+    <span class="c1">// feedback the possibility of a drop</span>
+    <span class="nx">dropzoneElement</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">'drop-target'</span><span class="p">);</span>
+    <span class="nx">draggableElement</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">'can-drop'</span><span class="p">);</span>
+    <span class="nx">draggableElement</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span> <span class="s1">'Dragged in'</span><span class="p">;</span>
+  <span class="p">},</span>
+  <span class="na">ondragleave</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// remove the drop feedback style</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">'drop-target'</span><span class="p">);</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">relatedTarget</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">'can-drop'</span><span class="p">);</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">relatedTarget</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span> <span class="s1">'Dragged out'</span><span class="p">;</span>
+  <span class="p">},</span>
+  <span class="na">ondrop</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">relatedTarget</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span> <span class="s1">'Dropped'</span><span class="p">;</span>
+  <span class="p">},</span>
+  <span class="na">ondropdeactivate</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// remove active dropzone feedback</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">'drop-active'</span><span class="p">);</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">'drop-target'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre>
+        </div>
+
+        <input id="demo-5-demo" type="radio" name="demo-5" hidden>
+        <label class="demo-label" for="demo-5-demo"> Demo only </label>
+    </div>
+
+    <div class="demo-area">
+        <input id="demo-4-html" type="radio" name="demo-4" hidden>
+        <label class="html-label" for="demo-4-html"> HTML </label>
+
+        <input id="demo-4-css" type="radio" name="demo-4" hidden>
+        <label class="css-label" for="demo-4-css"> CSS </label>
+
+        <input id="demo-4-js" type="radio" name="demo-4" hidden checked>
+        <label class="js-label" for="demo-4-js"> JS </label>
+
+            <input id="demo-4-demo" type="radio" name="demo-4" hidden>
+            <label class="demo-label" for="demo-4-demo"> Demo only </label>
+    </div>
+
+    <div class="demo-area">
+        <input id="demo-8-html" type="radio" name="demo-8" hidden>
+        <label class="html-label" for="demo-8-html"> HTML </label>
+
+            <input id="demo-8-css" type="radio" name="demo-8" hidden>
+            <label class="css-label" for="demo-8-css"> CSS </label>
+
+            <input id="demo-8-js" type="radio" name="demo-8" hidden checked>
+            <label class="js-label" for="demo-8-js"> JS </label>
+
+        <input id="demo-8-demo" type="radio" name="demo-8" hidden>
+        <label class="demo-label" for="demo-8-demo"> Demo only </label>
+    </div>
+
+    <div class="demo-area">
+        <input id="demo-3-html" type="radio" name="demo-3" hidden>
+        <label class="html-label" for="demo-3-html"> HTML </label>
+
+            <input id="demo-3-js" type="radio" name="demo-3" hidden checked>
+            <label class="js-label" for="demo-3-js"> JS </label>
+
+        <input id="demo-3-demo" type="radio" name="demo-3" hidden>
+        <label class="demo-label" for="demo-3-demo"> Demo only </label>
+    </div>
+
+    <div class="demo-area">
+
+        <input id="demo-1-html" type="radio" name="demo-1" hidden>
+        <label class="html-label" for="demo-1-html"> HTML </label>
+
+        <input id="demo-1-css" type="radio" name="demo-1" hidden>
+        <label class="css-label" for="demo-1-css"> CSS </label>
+
+        <input id="demo-1-js" type="radio" name="demo-1" hidden checked>
+        <label class="js-label" for="demo-1-js"> JS </label>
+      
+        <input id="demo-1-demo" type="radio" name="demo-1" hidden>
+        <label class="demo-label" for="demo-1-demo"> Demo only </label>
+    </div>
+
+    <div class="demo-area">
+        <input id="demo-6-html" type="radio" name="demo-6" hidden checked>
+        <label class="html-label" for="demo-6-html"> HTML </label>
+
+            <input id="demo-6-css" type="radio" name="demo-6" hidden>
+            <label class="css-label" for="demo-6-css"> CSS </label>
+
+        <input id="demo-6-demo" type="radio" name="demo-6" hidden>
+        <label class="demo-label" for="demo-6-demo"> Demo only </label>
+    </div>
+
+    <div class="demo-area">
+        <input id="demo-7-html" type="radio" name="demo-7" hidden checked>
+        <label class="html-label" for="demo-7-html"> HTML </label>
+
+            <input id="demo-7-css" type="radio" name="demo-7" hidden>
+            <label class="css-label" for="demo-7-css"> CSS </label>
+
+        <input id="demo-7-js" type="radio" name="demo-7" hidden checked>
+        <label class="js-label" for="demo-7-js"> JS </label>
+
+        <input id="demo-7-demo" type="radio" name="demo-7" hidden>
+        <label class="demo-label" for="demo-7-demo"> Demo only </label>
+    </div>
+</div>
+
+<script>
+    var lds = window.liveDemoSettings;
+
+    _.extend(window.liveDemoSettings, {
+        codeElementDepth: 3,
+        insertPosition  : 'beforeend',
+
+        HTMLSelector : lds.HTMLSelector + ', .highlight.html code',
+        CSSSelector  : lds.CSSSelector + ', .highlight.css code',
+        JSSelector   : lds.JSSelector + ', .highlight.javascript code',
+    });
+
+    interact('.demo-area .js-label, .demo-area .html-label, .demo-area .css-label, .demo-area .demo-label')
+        .on('tap', showTab);
+
+    // Hide demo code if the screen is initially narrow
+    if (window.innerWidth <= 570) {
+        _.each(document.querySelectorAll('.demo-area .demo-label'), function (label) {
+            showTab({ currentTarget: label });
+
+            label.previousElementSibling.checked = true;
+        });
+    }
+
+    function showTab (event) {
+        var label = event.currentTarget,
+            demoArea = label.parentNode,
+            codeBlocks = demoArea.querySelectorAll('.js-code, .html-code, .css-code'),
+            liveDemo = label.nextElementSibling;
+
+        _.each(codeBlocks, function (block) {
+            block.style.display = 'none';
+        });
+
+        if (liveDemo) {
+            liveDemo.style.display = '';
+        }
+    }
+</script>
+
+
+    <footer class="footer">
+        <table class="footer-table"><tbody><tr>
+            <td>
+                <p>
+                 <a href="http://taye.me">Taye Adeyemi</a>
+                    <a href="https://creativecommons.org/licenses/by/4.0/">©2014-2015</a>.
+                </p>
+                <p>Code released under the <a href="https://github.com/taye/interact.js/LICENSE"> MIT License.</a></p>
+            </td>
+        </tr></tbody></table>
+
+        <a class="scroll-top" href="#top" title="Back to top">
+            <img class="scroll-top-icon" alt="Back to top" src="/images/up.svg" />
+        </a>
+    </footer>
+</div>
+</body>
+</html>
