@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="new.css">
+  </head>
+  <body>
+
+    <div class="wrapper">
+      <div class="create-pref">
+        <h2> Create Preference</h2>
+        <ul>
+          <li>
+          <label>Preference Name</label>
+        <input id="pref-name" placeholder="e.g. Kino, Drinks,...">
+        <button id="send-pref">Send</button>
+      </div>
+
+      <div class="create-user">
+        <h2>Create User</h2>
+        <ul class="wmfg_questions">
+          <li class="wmfg_q">
+                  <label class="wmfg_label" for="text_id">Name</label>
+                  <input type="text" class="wmfg_text" name="text_name" id="username" value="" />
+          </li>
+          <li class="wmfg_q">
+                  <label class="wmfg_label">Preferences</label>
+                  <table class="wmfg_answers" id="user-pref">
+                  </table>
+          </li>
+
+
+          <li class="wmfg_q">
+            <button id="send-user">Send</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+  <script src="assets/js/jquery-3.1.1.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+  <script src="js/db.js"></script>
+  <script>
+
+    //First Initialize Database!
+    DB.init();
+
+    //Create new Preference
+    $('#send-pref').click(function(e){
+      const pref = $('#pref-name').val();
+      DB.createPreference(pref);
+      $('#pref-name').val('');
+    });
+
+    //Create new User
+    $('#send-user').click(function(e){
+      const name = $('#username').val();
+      const $prefrows = $('.pref-checkbox');
+      const prefs = {};
+
+      $prefrows.each(function(index){
+        const pref = $(this)[0];
+        prefs[pref.id] = pref.checked;
+      });
+
+      DB.createUser({name, prefs}, function(err){
+        if(err){
+          alert(err);
+        } else {
+          $('#username').val('');
+          $('.pref-checkbox').prop('checked', false);
+        }
+      });
+    });
+
+    //Get all Prefs
+    DB.getAllPrefs((prefs) => {
+      for (key in prefs) {
+        const prefName = prefs[key].name;
+
+        $('#user-pref').append(`<tr class="pref-row">
+          <td class="wmfg_a_td"><input type="checkbox" class="pref-checkbox" name="checkbox_1" id=${key} value=${key} /></td>
+                <td><label class="wmfg_label_a" for="checkbox_1">${prefName}</label></td>
+                      </tr>`);
+      }
+    });
+
+    //Get user by ID
+    DB.getUserById('-KZN1oCPuUUP27dKQPMv', function(user) {
+      console.log(user);
+    });
+
+  </script>
+</html>

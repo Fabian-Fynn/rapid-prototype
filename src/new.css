@@ -1,0 +1,14 @@
+.wrapper {
+  width: 20vw;
+  height: 100vh;
+  margin: 30px auto;
+}
+
+.create-pref, .create-user{
+  width: 20vw;
+}
+
+li {
+  list-style-type: none;
+  padding-bottom: 10px;
+}
