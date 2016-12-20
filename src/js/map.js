@@ -78,3 +78,8 @@ const handleLocationError = (browserHasGeolocation, infoWindow, pos) => {
         'Error: The Geolocation service failed.' :
         'Error: Your browser doesn\'t support geolocation.');
 }
+
+$('#start_button').on('click', function(e) {
+  localStorage.setItem('invitedusers', chosenUser);
+  window.location('event.html');
+});
