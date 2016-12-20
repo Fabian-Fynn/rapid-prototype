@@ -43,8 +43,20 @@ const DB = {
     });
   },
   getAllUsers: function(callback) {
-    this.firebaseDB.ref('/users/').once('value').then(function(snapshot) {
-        callback(snapshot.val());
+    DB.requestAllUsers(function(users){
+      DB.getAllPrefs(function(prefs){
+        for (let u in users) {
+          const preferences = [];
+          for (let p in users[u].prefs) {
+            if (users[u].prefs[p] === true) {
+              preferences.push({'id':p, 'name': prefs[p].name});
+            }
+          }
+          users[u].prefs = preferences;
+          users[u].id = u;
+        }
+        callback(users);
+      });
     });
   },
   getAllPrefs: function(callback) {
@@ -56,5 +68,12 @@ const DB = {
     this.firebaseDB.ref('/users/' + userId).once('value').then(function(snapshot) {
       callback(snapshot.val());
     });
+  },
+  requestAllUsers: function(callback) {
+    this.firebaseDB.ref('/users/').once('value').then(function(snapshot) {
+      const users = snapshot.val();
+        callback(users);
+    });
+
   }
 }
