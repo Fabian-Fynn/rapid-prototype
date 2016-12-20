@@ -1,13 +1,14 @@
 let markers = [];
+let chosenUser = {};
 let map;
+
 const chosenPreference = localStorage.getItem('prefid');
 const userId = localStorage.getItem('userid');
-console.log(userId)
 
 DB.init();
 
 const addMarker = user => {
-    const markerSize = 30;
+    const markerSize = 40;
 
     DB.getAllPrefs(prefs => {
         const image = {
@@ -27,10 +28,11 @@ const addMarker = user => {
             icon: image,
             class: "my-marker-style"
         });
-        if(markers.length > 0){
-          markers[markers.length - 1].addListener('click', function(event) {
-              console.log("test");
-          });
+        if (markers.length > 0) {
+            markers[markers.length - 1].addListener('click', toggleBounce);
+            markers[markers.length - 1].addListener('click', function(event) {
+              chosenUser[user.id] = user;
+            });
         }
         markers.push(marker);
     });
@@ -60,26 +62,15 @@ function initMap() {
     map.setOptions({
         styles
     });
-
-    // // Try HTML5 geolocation.
-    // if (navigator.geolocation) {
-    //     navigator.geolocation.getCurrentPosition(function(position) {
-    //         pos = {
-    //             lat: position.coords.latitude,
-    //             lng: position.coords.longitude
-    //         };
-    //
-    //         infoWindow.setPosition(pos);
-    //         infoWindow.setContent('Location found.');
-    //         map.setCenter(pos);
-    //     }, function() {
-    //         handleLocationError(true, infoWindow, map.getCenter());
-    //     });
-    // } else {
-    //     // Browser doesn't support Geolocation
-    //     handleLocationError(false, infoWindow, map.getCenter());
-    // }
 };
+
+function toggleBounce() {
+    if (this.getAnimation() !== null) {
+        this.setAnimation(null);
+    } else {
+        this.setAnimation(google.maps.Animation.BOUNCE);
+    }
+}
 
 const handleLocationError = (browserHasGeolocation, infoWindow, pos) => {
     infoWindow.setPosition(pos);
@@ -87,3 +78,8 @@ const handleLocationError = (browserHasGeolocation, infoWindow, pos) => {
         'Error: The Geolocation service failed.' :
         'Error: Your browser doesn\'t support geolocation.');
 }
+
+$('#start_button').on('click', function(e) {
+  localStorage.setItem('invitedusers', chosenUser);
+  window.location('event.html');
+});
