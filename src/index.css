@@ -1,3 +1,7 @@
+body {
+    color: #fff;
+}
+
 .activity-icon {
     width: 15vw;
     height: 15vw;
@@ -76,4 +80,27 @@
 #drag-me::before {
     content: "#" attr(id);
     font-weight: bold;
+}
+
+.activity-icon.disabled {
+    opacity: 0.4;
+    filter: alpha(opacity=40); /* msie */
+}
+
+.submit {
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: green;
+    padding: 30px;
+    font-size: 1.5em;
+    color: #fff;
+    border: none;
+}
+
+.submit:disabled {
+    color: #111;
+    background: #666;
 }
