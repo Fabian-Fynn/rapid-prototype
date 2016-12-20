@@ -187,12 +187,12 @@
       obj.prefs[pref] = true;
     });
 
-    DB.createUser(obj, function(err, res) {
+    DB.createUser(obj, function(err, userId) {
       if(err){
         alert(err);
       } else {
         // TODO: Save user ID to localStorage
-        console.log(err, res);
+        localStorage.setItem('userid', userId);
         location.href = 'select.html'
       }
     });
