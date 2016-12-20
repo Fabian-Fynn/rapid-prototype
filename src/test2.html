@@ -100,15 +100,14 @@
   // add the recognizers
   manager.add(Pan);
 
+  // doubletap
+  manager.add( new Hammer.Tap({ event: 'doubletap', taps: 2 }) );
+  manager.get('doubletap').recognizeWith('doubletap');
+
   var deltaX = 0;
   var deltaY = 0;
 
-  var originalOffset = {};
-
   manager.on('panstart', function(e) {
-    if (!originalOffset.hasOwnProperty(id)) {
-      originalOffset[id] = target.offset();
-    }
     
     target.originalWidth = target.width();
     target.originalHeight = target.height();
@@ -130,28 +129,22 @@
     $.Velocity.hook($target, 'translateY', dY + 'px');
   });
 
-  manager.on('panend', function(e) {
-
-    deltaX = deltaX + e.deltaX;
-    deltaY = deltaY + e.deltaY;
-
-    if(overlaps(target, $('.dropzone'))) {
-      if (selected.indexOf(id) === -1) selected.push(id);
-    } else {
-      // remove from selected
-      let idx = selected.indexOf(id);
-      if(idx > -1) {
-          selected.splice(idx, 1);
-      }
-      target.css({ position: 'static' });
-      target.offset(originalOffset[id]);
-      deltaX = originalOffset[id].left;
-      deltaY = originalOffset[id].top;
+  function resetItem () {
+    // remove from selected
+    let idx = selected.indexOf(id);
+    if(idx > -1) {
+        selected.splice(idx, 1);
     }
+    target.css({ position: 'static' });
 
-    deltaX = deltaX + e.deltaX;
-    deltaY = deltaY + e.deltaY;
+    // Reset
+    $.Velocity.hook(target, 'translateX', 0 + 'px');
+    $.Velocity.hook(target, 'translateY', 0 + 'px');
+    deltaX = 0;
+    deltaY = 0;
+  }
 
+  function syncCount () {
     $('.count').html(maxElements-selected.length);
 
     if(selected.length === maxElements) {
@@ -171,9 +164,28 @@
         obj.item.removeClass('disabled');
       });
     }
+  }
+
+  manager.on('panend', function(e) {
+
+    deltaX = deltaX + e.deltaX;
+    deltaY = deltaY + e.deltaY;
+
+    if(overlaps(target, $('.dropzone'))) {
+      if (selected.indexOf(id) === -1) selected.push(id);
+    } else {
+      resetItem();
+    }
+
+    syncCount();
 
     target.width(target.originalWidth);
     target.height(target.originalHeight);
+  });
+
+  manager.on('doubletap', function(e) {
+    resetItem();
+    syncCount();
   });
 
   }
