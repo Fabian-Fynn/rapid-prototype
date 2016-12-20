@@ -25,21 +25,27 @@ const addMarker = user => {
             animation: google.maps.Animation.DROP,
             title: 'User: ' + user.username,
             icon: image
+            class: "my-marker-style"
         });
-
+        if(markers.length > 0){
+          markers[markers.length - 1].addListener('click', function(event) {
+              console.log("test");
+          });
+        }
         markers.push(marker);
     });
+
 };
 
 DB.getUsersByPref(chosenPreference, users => {
     for (let idx in users) {
-      if(users[idx].id != userId){
-        addMarker(users[idx]);
-      }
+        if (users[idx].id != userId) {
+            addMarker(users[idx]);
+        }
     }
 });
 
-function initMap () {
+function initMap() {
     const myLatLng = {
         lat: 47.722942,
         lng: 13.089094
@@ -51,7 +57,9 @@ function initMap () {
         zoom: 16
     });
 
-    map.setOptions({ styles });
+    map.setOptions({
+        styles
+    });
 
     // // Try HTML5 geolocation.
     // if (navigator.geolocation) {
