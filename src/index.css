@@ -1,5 +1,21 @@
+html, body {
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
 body {
     color: #fff;
+    margin: 0;
+    background: #2196F3;
+    padding: 0px;
+    padding-top: 10px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.hey {
+    text-align: center;
+    width: 100%;
 }
 
 .activity-icon {
@@ -9,12 +25,15 @@ body {
 }
 
 .wrapper-activity-bar {
-    width: 95%;
+    width: 100%;
     margin: 0 auto;
+    background: #03A9F4;
+    padding: 10px 20px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.03);
+    box-sizing: border-box;
 }
 
 .activity-container {
-    background-color: darkgray;
     float: left;
     width: 15vw;
     height: 15vw;
@@ -31,8 +50,10 @@ body {
   max-width: 50px;
 }
 
-#outer-dropzone {
-    height: 140px;
+#count {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
 }
 
 #inner-dropzone {
@@ -40,12 +61,13 @@ body {
 }
 
 .dropzone {
-    background-color: #ccc;
-    border: dashed 4px transparent;
+    border: dashed 3px #03A9F4;
     border-radius: 4px;
     margin: 10px auto 30px;
     padding: 10px;
-    width: 80%;
+    width: 95%;
+    height: 40%;
+    box-sizing: border-box;
     transition: background-color 0.3s;
 }
 
@@ -100,20 +122,6 @@ body {
     filter: alpha(opacity=40); /* msie */
 }
 
-.submit {
-    text-align: center;
-    width: 100%;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    background: green;
-    padding: 30px;
-    font-size: 1.5em;
-    color: #fff;
-    border: none;
-    z-index: 1;
-}
-
 .submit:disabled {
     color: #111;
     background: #666;
@@ -126,4 +134,64 @@ input.name {
     box-sizing: border-box;
     z-index: 1000;
     position: relative;
+    background: none;
+    border: 2px dashed #03A9F4;
+    text-align: center;
+    color: #fff;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
+    -webkit-tap-highlight-color: transparent;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #cbcbcb;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #cbcbcb;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #cbcbcb;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #cbcbcb;
+}
+
+input.name:focus {
+    color: #fff;
+    border: none !important;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
+    -webkit-tap-highlight-color: transparent;
+}
+
+.buttons {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.buttons button {
+    color: #fff;
+    background: none;
+    z-index: 1;
+    border: none !important;
+    background: none !important;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 20px;
+}
+
+.buttons button:disabled {
+    color: #297bbc;
+}
+
+.buttons .back {
+    float: left;
+}
+
+.buttons .submit {
+    float: right;
 }

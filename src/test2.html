@@ -6,8 +6,8 @@
     <title>Onboarding</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="test.css">
     <link rel="stylesheet" type="text/css" href="index.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 </head>
 <body id="body">
 
@@ -17,26 +17,20 @@
   <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
   <script src="js/db.js"></script>
 
-  Please select <span class="count"></span> elements:
+  <div id="count">
+    Please select <span class="count"></span> elements
+  </div>
 
-  <div id="outer-dropzone" class="dropzone"></div>
+  <div class="dropzone"></div>
 
-    <div class="wrapper-activity-bar container-icon">
-        <!-- <img class="activity-icon" src="assets/icons/01_Sports.png" alt="Icon Sports" data-id="1" />
-        <img class="activity-icon" src="assets/icons/02_Netflix_and_Chill.png" alt="Icon Netflix & Chill" data-id="2" />
-        <img class="activity-icon" src="assets/icons/03_Drink.ico" alt="Icon Drink" data-id="3" />
-        <img class="activity-icon" src="assets/icons/04_Eat.png" alt="Icon Eat" data-id="4" />
-        <img class="activity-icon" src="assets/icons/05_Movies.png" alt="Icon Movies" data-id="5" />
-        <img class="activity-icon" src="assets/icons/06_Music.png" alt="Icon Music" data-id="6" />
-        <img class="activity-icon" src="assets/icons/07_Games.png" alt="Icon Games" data-id="7" />
-        <img class="activity-icon" src="assets/icons/08_Shopping.png" alt="Icon Shopping" data-id="8" />
-        <img class="activity-icon" src="assets/icons/09_Party.ico" alt="Icon Party" data-id="9" />
-        <img class="activity-icon" src="assets/icons/10_Coffee.png" alt="Icon Coffee" data-id="10" />-->
-    </div>
+  <div class="wrapper-activity-bar container-icon"></div>
 
-  <button class="submit" disabled>
-    Submit
-  </button>
+  <div class="buttons">
+    <button class="back">Back</button>
+    <button class="submit" disabled>Done</button>
+  </div>
+
+
 
   <script>
 
@@ -193,6 +187,7 @@
     for(key in prefs) {
       $('.container-icon').append('<div class="activity-container"><img class="activity-icon" src="assets/icons/'+key+'.png" alt="'+prefs[key].name+'" data-id="'+key+'" /></div>');
     };
+    $('.container-icon').append('<div style="clear: both;"></div>');
 
     document.querySelectorAll('img').forEach(function(item) {
       createHammer(item);
