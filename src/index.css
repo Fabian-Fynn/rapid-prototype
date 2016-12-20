@@ -8,6 +8,19 @@ body {
     transition: width 0.5s, height 0.5s;
 }
 
+.wrapper-activity-bar {
+    width: 95%;
+    margin: 0 auto;
+}
+
+.activity-container {
+    background-color: darkgray;
+    float: left;
+    width: 15vw;
+    height: 15vw;
+    padding: 5px;
+}
+
 .list-item {
     list-style-type: none;
     float: left;
