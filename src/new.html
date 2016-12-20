@@ -61,7 +61,7 @@
         prefs[pref.id] = pref.checked;
       });
 
-      DB.createUser({name, prefs}, function(err){
+      DB.createUser({name, prefs, lat: 0, lng: 0}, function(err){
         if(err){
           alert(err);
         } else {

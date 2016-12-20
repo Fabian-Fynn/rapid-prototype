@@ -28,13 +28,15 @@ const DB = {
       err += "Wrong number of preferences (exactly 3)";
     }
     if (err === '') {
-      this.firebaseRef.child('users').push({
+      const ref = this.firebaseRef.child('users').push({
         username: options.name,
         prefs: options.prefs,
         lat: options.lat,
         lng: options.lng
-      });
-      callback(null);
+        }).then((snap) => {
+         const key = snap.key
+         callback(null, key);
+       });
     } else {
       callback(err);
     }
