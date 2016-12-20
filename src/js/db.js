@@ -85,8 +85,12 @@ const DB = {
       const relevantUsers = {};
       for (let u in users) {
         const user = users[u];
-        if (user.prefs.hasOwnProperty(pref)) {
-          relevantUsers[u] = user;
+        for (let p=0; p < user.prefs.length; p++) {
+          console.log('p', user.prefs[p]);
+          if (user.prefs[p].id === pref) {
+            console.log('here');
+            relevantUsers[u] = user;
+          }
         }
       }
       callback(relevantUsers);
