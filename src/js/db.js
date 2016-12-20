@@ -66,7 +66,18 @@ const DB = {
   },
   getUserById: function(userId, callback) {
     this.firebaseDB.ref('/users/' + userId).once('value').then(function(snapshot) {
-      callback(snapshot.val());
+       DB.getAllPrefs(function(prefs){
+          const preferences = [];
+          const user = snapshot.val();
+          for (let p in user.prefs) {
+            if (user.prefs[p] === true) {
+              preferences.push({'id':p, 'name': prefs[p].name});
+            }
+          }
+          user.prefs = preferences;
+          user.id = userId;
+        callback(user);
+      });
     });
   },
   requestAllUsers: function(callback) {
