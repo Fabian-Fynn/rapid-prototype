@@ -43,8 +43,20 @@ const DB = {
     });
   },
   getAllUsers: function(callback) {
-    this.firebaseDB.ref('/users/').once('value').then(function(snapshot) {
-        callback(snapshot.val());
+    DB.requestAllUsers(function(users){
+      DB.getAllPrefs(function(prefs){
+        for (let u in users) {
+          const preferences = [];
+          for (let p in users[u].prefs) {
+            if (users[u].prefs[p] === true) {
+              preferences.push({'id':p, 'name': prefs[p].name});
+            }
+          }
+          users[u].prefs = preferences;
+          users[u].id = u;
+        }
+        callback(users);
+      });
     });
   },
   getAllPrefs: function(callback) {
@@ -54,7 +66,25 @@ const DB = {
   },
   getUserById: function(userId, callback) {
     this.firebaseDB.ref('/users/' + userId).once('value').then(function(snapshot) {
-      callback(snapshot.val());
+       DB.getAllPrefs(function(prefs){
+          const preferences = [];
+          const user = snapshot.val();
+          for (let p in user.prefs) {
+            if (user.prefs[p] === true) {
+              preferences.push({'id':p, 'name': prefs[p].name});
+            }
+          }
+          user.prefs = preferences;
+          user.id = userId;
+        callback(user);
+      });
     });
+  },
+  requestAllUsers: function(callback) {
+    this.firebaseDB.ref('/users/').once('value').then(function(snapshot) {
+      const users = snapshot.val();
+        callback(users);
+    });
+
   }
 }
