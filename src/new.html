@@ -84,7 +84,7 @@
     });
 
     //Get user by ID
-    DB.getUserById('-KZN1oCPuUUP27dKQPMv', function(user) {
+    DB.getUserById('-KZQpebXksIlPv3PZo5w', function(user) {
       console.log(user);
     });
     //Get all users
@@ -92,5 +92,19 @@
       console.log(users);
     });
 
+  </script>
+  <script>
+    getLocation();
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+    }
+    function showPosition(position) {
+      console.log("Latitude: " + position.coords.latitude + 
+        "<br>Longitude: " + position.coords.longitude)
+    }
   </script>
 </html>
