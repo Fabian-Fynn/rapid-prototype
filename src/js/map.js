@@ -1,10 +1,10 @@
 let markers = [];
 let map;
+const chosenPreference = localStorage.getItem('prefid');
 
 DB.init();
 
 const addMarker = user => {
-    const chosenPreference = localStorage.getItem('prefid');
     const markerSize = 30;
 
     DB.getAllPrefs(prefs => {
@@ -21,23 +21,23 @@ const addMarker = user => {
             },
             map: map,
             animation: google.maps.Animation.DROP,
-            title: 'User: ' + user,
+            title: 'User: ' + user.username,
             icon: image
         });
 
         markers.push(marker);
     });
-
 };
 
-DB.getAllUsers(users => {
+DB.getUsersByPref(chosenPreference, users => {
     for (let idx in users) {
+        console.log(users[idx]);
         addMarker(users[idx]);
     }
 });
 
-const initMap = () => {
-    var myLatLng = {
+function initMap () {
+    const myLatLng = {
         lat: 47.722942,
         lng: 13.089094
     };
@@ -68,7 +68,7 @@ const initMap = () => {
     //     // Browser doesn't support Geolocation
     //     handleLocationError(false, infoWindow, map.getCenter());
     // }
-}
+};
 
 const handleLocationError = (browserHasGeolocation, infoWindow, pos) => {
     infoWindow.setPosition(pos);
