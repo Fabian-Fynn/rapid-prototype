@@ -6,3 +6,16 @@
 .small-img{
   width:50%;
 }
+
+.dark-blue-jan{
+  background-color: #2196F3 !important;
+}
+
+.light-blue-jan{
+  background-color: #03A9F4;
+}
+
+.buttons {
+  position: absolute;
+  bottom: 10vh;
+}
