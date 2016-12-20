@@ -20,7 +20,7 @@ DB.getUserById(localStorage.getItem('userid'), function (user) {
     innertable += '<tr class="'+tablecolor+'" style="border-radius: 0;"><td style="border-radius: 0;">'+pref.name+'</td><td style="border-radius: 0;"><button class="btn green" id="'+pref.id+'"><i class="large material-icons">thumb_up</i></button></td></tr>';
 
     $('#select_secondary').on('click', 'button#'+pref.id, function () {
-      localStorage.setItem('prefid', preferance_id[random]);
+      localStorage.setItem('prefid', pref.id);
       window.location = 'map.html';
     });
 
