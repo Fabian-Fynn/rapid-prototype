@@ -89,6 +89,7 @@ const DB = {
           relevantUsers[u] = user;
         }
       }
+      callback(relevantUsers);
     });
   },
   requestAllUsers: function(callback) {
