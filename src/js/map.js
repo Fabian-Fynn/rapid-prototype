@@ -1,32 +1,42 @@
+DB.init();
 var map;
+var markers = [];
+
+function addMarker(user) {
+    var marker = new google.maps.Marker({
+        position: {
+            lat: user.lat,
+            lng: user.lng
+        },
+        map: map,
+        animation: google.maps.Animation.DROP,
+        title: 'User: ' + user
+
+    });
+    markers.push(marker);
+}
+
+DB.getAllUsers(function(users) {
+  for (var idx in users) {
+    console.log(users[idx].lat);
+    addMarker(users[idx]);
+  }
+});
 
 function initMap() {
     var myLatLng = {
         lat: 47.722942,
         lng: 13.089094
     };
-    var markersLatLng = {
-        0: {
-            lat: 47.732942,
-            lng: 13.099094
-        },
-        1: {
-            lat: 47.712942,
-            lng: 13.079094
-        },
-        2: {
-            lat: 47.712942,
-            lng: 13.11094
-        },
-        3: {
-            lat: 47.762942,
-            lng: 13.059094
-        }
-    }
+
     map = new google.maps.Map(document.getElementById('map'), {
         center: myLatLng,
         disableDefaultUI: true,
         zoom: 16
+    });
+
+    map.setOptions({
+      styles: map_style
     });
 
     // // Try HTML5 geolocation.
@@ -47,18 +57,6 @@ function initMap() {
     //     // Browser doesn't support Geolocation
     //     handleLocationError(false, infoWindow, map.getCenter());
     // }
-
-    for (var idx in markersLatLng) {
-        console.log(markersLatLng[idx].lat)
-        var newMarker = new google.maps.Marker({
-            position: {
-              lat: markersLatLng[idx].lat,
-              lng: markersLatLng[idx].lng
-            },
-            title: 'Marker Nr: ' + idx
-        });
-        newMarker.setMap(map);
-    }
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
