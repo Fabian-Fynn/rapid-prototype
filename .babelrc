@@ -1,4 +1,7 @@
 {
     "presets": ["es2015"],
-    "plugins": ["transform-es2015-for-of"]
+    "plugins": [
+        "transform-es2015-for-of",
+        "transform-es2015-template-literals"
+    ]
 }
