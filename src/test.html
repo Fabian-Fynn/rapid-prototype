@@ -191,49 +191,7 @@
 
         <input id="demo-5-js" type="radio" name="demo-5" hidden checked>
         <label class="js-label" for="demo-5-js"> JS </label>
-        <div class="js-code">
-<pre class="highlight javascript"><code><span class="cm">/* enable javascript to view a demo */</span>
-<span class="cm">/* The dragging code for '.draggable' from the demo above
- * applies to this demo as well so it doesn't have to be repeated. */</span>
-
-<span class="c1">// enable draggables to be dropped into this</span>
-<span class="nx">interact</span><span class="p">(</span><span class="s1">'.dropzone'</span><span class="p">).</span><span class="nx">dropzone</span><span class="p">({</span>
-  <span class="c1">// only accept elements matching this CSS selector</span>
-  <span class="na">accept</span><span class="p">:</span> <span class="s1">'#yes-drop'</span><span class="p">,</span>
-  <span class="c1">// Require a 75% element overlap for a drop to be possible</span>
-  <span class="na">overlap</span><span class="p">:</span> <span class="mf">0.75</span><span class="p">,</span>
-
-  <span class="c1">// listen for drop related events:</span>
-
-  <span class="na">ondropactivate</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// add active dropzone feedback</span>
-    <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">'drop-active'</span><span class="p">);</span>
-  <span class="p">},</span>
-  <span class="na">ondragenter</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">draggableElement</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">relatedTarget</span><span class="p">,</span>
-        <span class="nx">dropzoneElement</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">;</span>
-
-    <span class="c1">// feedback the possibility of a drop</span>
-    <span class="nx">dropzoneElement</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">'drop-target'</span><span class="p">);</span>
-    <span class="nx">draggableElement</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">'can-drop'</span><span class="p">);</span>
-    <span class="nx">draggableElement</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span> <span class="s1">'Dragged in'</span><span class="p">;</span>
-  <span class="p">},</span>
-  <span class="na">ondragleave</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// remove the drop feedback style</span>
-    <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">'drop-target'</span><span class="p">);</span>
-    <span class="nx">event</span><span class="p">.</span><span class="nx">relatedTarget</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">'can-drop'</span><span class="p">);</span>
-    <span class="nx">event</span><span class="p">.</span><span class="nx">relatedTarget</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span> <span class="s1">'Dragged out'</span><span class="p">;</span>
-  <span class="p">},</span>
-  <span class="na">ondrop</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">event</span><span class="p">.</span><span class="nx">relatedTarget</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span> <span class="s1">'Dropped'</span><span class="p">;</span>
-  <span class="p">},</span>
-  <span class="na">ondropdeactivate</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// remove active dropzone feedback</span>
-    <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">'drop-active'</span><span class="p">);</span>
-    <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">'drop-target'</span><span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">});</span>
-</code></pre>
+        <div class="js-code">asd
         </div>
 
         <input id="demo-5-demo" type="radio" name="demo-5" hidden>

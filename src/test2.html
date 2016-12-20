@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Onboarding</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="test.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body id="body">
+
+  <script src="https://hammerjs.github.io/dist/hammer.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+  <script src="https://cdn.rawgit.com/julianshapiro/velocity/master/velocity.min.js"></script>
+
+  Please select <span class="count"></span> elements:
+
+  <div id="outer-dropzone" class="dropzone"></div>
+
+    <ul class="wrapper-activity-bar container-icon">
+        <img class="activity-icon" src="assets/icons/01_Sports.png" alt="Icon Sports" data-id="1" />
+        <img class="activity-icon" src="assets/icons/02_Netflix_and_Chill.png" alt="Icon Netflix & Chill" data-id="2" />
+        <img class="activity-icon" src="assets/icons/03_Drink.ico" alt="Icon Drink" data-id="3" />
+        <img class="activity-icon" src="assets/icons/04_Eat.png" alt="Icon Eat" data-id="4" />
+        <img class="activity-icon" src="assets/icons/05_Movies.png" alt="Icon Movies" data-id="5" />
+        <img class="activity-icon" src="assets/icons/06_Music.png" alt="Icon Music" data-id="6" />
+        <img class="activity-icon" src="assets/icons/07_Games.png" alt="Icon Games" data-id="7" />
+        <img class="activity-icon" src="assets/icons/08_Shopping.png" alt="Icon Shopping" data-id="8" />
+        <img class="activity-icon" src="assets/icons/09_Party.ico" alt="Icon Party" data-id="9" />
+        <img class="activity-icon" src="assets/icons/10_Coffee.png" alt="Icon Coffee" data-id="10" />
+    </ul>
+
+  <button class="submit" disabled>
+    Submit
+  </button>
+
+  <script>
+
+  const maxElements = 3;
+
+  $('.count').html(maxElements);
+
+  var overlaps = (function () {
+      function getPositions( elem ) {
+          var pos, width, height;
+          pos = $( elem ).position();
+          width = $( elem ).width();
+          height = $( elem ).height();
+          return [ [ pos.left, pos.left + width ], [ pos.top, pos.top + height ] ];
+      }
+
+      function comparePositions( p1, p2 ) {
+          var r1, r2;
+          r1 = p1[0] < p2[0] ? p1 : p2;
+          r2 = p1[0] < p2[0] ? p2 : p1;
+          return r1[1] > r2[0] || r1[0] === r2[0];
+      }
+
+      return function ( a, b ) {
+          var pos1 = getPositions( a ),
+              pos2 = getPositions( b );
+
+          return comparePositions( pos1[0], pos2[0] ) && comparePositions( pos1[1], pos2[1] );
+      };
+  })();
+
+  var selected = [];
+  var managers = [];
+
+  function createHammer (item) {
+
+  var target = $(item);
+
+  var id = target.data('id');
+
+  // create a manager for that element
+  var manager = new Hammer.Manager(item);
+
+  managers.push({
+    id: id,
+    manager: manager,
+    item: target
+  });
+
+  // create recognizers
+  var Pan = new Hammer.Pan();
+
+  // add the recognizers
+  manager.add(Pan);
+
+  var deltaX = 0;
+  var deltaY = 0;
+
+  manager.on('panstart', function(e) {
+    
+    target.originalWidth = target.width();
+    target.originalHeight = target.height();
+
+    target.width(target.width()*1.5);
+    target.height(target.height()*1.5);
+
+  });
+  
+  manager.on('panmove', function(e) {
+
+    target.css({ position: "absolute" });
+
+    $target = target;
+
+    // do something cool
+    var dX = deltaX + (e.deltaX);
+    var dY = deltaY + (e.deltaY);
+    $.Velocity.hook($target, 'translateX', dX + 'px');
+    $.Velocity.hook($target, 'translateY', dY + 'px');
+  });
+
+  manager.on('panend', function(e) {
+    if(overlaps(target, $('.dropzone'))) {
+      if (selected.indexOf(id) === -1) selected.push(id);
+    } else {
+      // remove from selected
+      let idx = selected.indexOf(id);
+      if(idx > -1) {
+          selected.splice(idx, 1);
+      }
+      target.css({ position: 'static' });
+    }
+
+    deltaX = deltaX + e.deltaX;
+    deltaY = deltaY + e.deltaY;
+
+    $('.count').html(maxElements-selected.length);
+
+    if(selected.length === maxElements) {
+      $('.submit').prop('disabled', false);
+
+      managers.forEach(function(obj) {
+        if(selected.indexOf(obj.id) === -1) {
+          obj.manager.get('pan').set({ enable: false });
+          obj.item.addClass('disabled');
+        }
+      });
+
+    } else {
+      $('.submit').prop('disabled', true);
+      managers.forEach(function(obj) {
+        obj.manager.get('pan').set({ enable: true });
+        obj.item.removeClass('disabled');
+      });
+    }
+
+    target.width(target.originalWidth);
+    target.height(target.originalHeight);
+
+  });
+
+  }
+
+  document.querySelectorAll('img').forEach(function(item) {
+    createHammer(item);
+  });
+
+  $('.submit').on('click', function() {
+    alert("ASD");
+  })
+
+</script>
+
+</body>
+</html>
