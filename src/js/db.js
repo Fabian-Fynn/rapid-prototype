@@ -28,11 +28,15 @@ const DB = {
       err += "Wrong number of preferences (exactly 3)";
     }
     if (err === '') {
-      this.firebaseRef.child('users').push({
+      const ref = this.firebaseRef.child('users').push({
         username: options.name,
-        prefs: options.prefs
-      });
-      callback(null);
+        prefs: options.prefs,
+        lat: options.lat,
+        lng: options.lng
+        }).then((snap) => {
+         const key = snap.key
+         callback(null, key);
+       });
     } else {
       callback(err);
     }
@@ -85,8 +89,12 @@ const DB = {
       const relevantUsers = {};
       for (let u in users) {
         const user = users[u];
-        if (user.prefs.hasOwnProperty(pref)) {
-          relevantUsers[u] = user;
+        for (let p=0; p < user.prefs.length; p++) {
+          console.log('p', user.prefs[p]);
+          if (user.prefs[p].id === pref) {
+            console.log('here');
+            relevantUsers[u] = user;
+          }
         }
       }
       callback(relevantUsers);
