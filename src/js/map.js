@@ -80,6 +80,6 @@ const handleLocationError = (browserHasGeolocation, infoWindow, pos) => {
 }
 
 $('#start_button').on('click', function(e) {
-  localStorage.setItem('invitedusers', chosenUser);
-  window.location('event.html');
+  localStorage.setItem('invitedusers', JSON.stringify(chosenUser));
+    window.location = 'event.html';
 });

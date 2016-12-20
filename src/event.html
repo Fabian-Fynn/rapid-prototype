@@ -1,0 +1,39 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Event</title>
+  <link rel="stylesheet" type="text/css" href="assets/css/materialize.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+<div id="container">
+  <div class="center section">
+    Create event
+  </div>
+  <div>
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s6">
+          <input placeholder="Event Name" id="first_name" type="text" class="validate">
+          <button class="btn">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <table id="eventtable">
+
+  </table>
+
+</div>
+
+<script src="assets/js/jquery-3.1.1.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+<script src="js/db.js"></script>
+<script src="js/event.js"></script>
+</body>
+</html>
