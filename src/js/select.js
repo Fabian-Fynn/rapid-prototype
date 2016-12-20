@@ -46,7 +46,7 @@ DB.getUserById(localStorage.getItem('userid'), function (user) {
 
   $('#name').append(user.username);
   $('#preference').append(preferance[random]);
-  $('#preferencepic').append('<img src="assets/icons/'+preferance_id[random]+'.png" />');
+  $('#preferencepic').append('<img class="center small-img" src="assets/icons/'+preferance_id[random]+'.png" />');
 
 
 
