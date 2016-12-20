@@ -8,7 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="test.css">
     <link rel="stylesheet" type="text/css" href="index.css">
-
+    <style>
+      .activity-container {
+        background-color: darkgray;
+        float: left;
+        width: 15vw;
+        height: 15vw;
+      }
+    </style>
 </head>
 <body id="body">
 
@@ -96,7 +103,12 @@
   var deltaX = 0;
   var deltaY = 0;
 
+  var originalOffset = {};
+
   manager.on('panstart', function(e) {
+    if (!originalOffset.hasOwnProperty(id)) {
+      originalOffset[id] = target.offset();
+    }
     
     target.originalWidth = target.width();
     target.originalHeight = target.height();
@@ -107,7 +119,6 @@
   });
   
   manager.on('panmove', function(e) {
-
     target.css({ position: "absolute" });
 
     $target = target;
@@ -120,6 +131,10 @@
   });
 
   manager.on('panend', function(e) {
+
+    deltaX = deltaX + e.deltaX;
+    deltaY = deltaY + e.deltaY;
+
     if(overlaps(target, $('.dropzone'))) {
       if (selected.indexOf(id) === -1) selected.push(id);
     } else {
@@ -129,6 +144,9 @@
           selected.splice(idx, 1);
       }
       target.css({ position: 'static' });
+      target.offset(originalOffset[id]);
+      deltaX = originalOffset[id].left;
+      deltaY = originalOffset[id].top;
     }
 
     deltaX = deltaX + e.deltaX;
@@ -156,7 +174,6 @@
 
     target.width(target.originalWidth);
     target.height(target.originalHeight);
-
   });
 
   }
