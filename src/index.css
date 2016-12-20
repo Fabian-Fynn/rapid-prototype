@@ -90,7 +90,7 @@ body {
 .submit {
     text-align: center;
     width: 100%;
-    position: absolute;
+    position: fixed;
     left: 0;
     bottom: 0;
     background: green;
@@ -112,4 +112,5 @@ input.name {
     padding: 20px;
     box-sizing: border-box;
     z-index: 1000;
+    position: relative;
 }
