@@ -5,25 +5,25 @@
     <meta charset="UTF-8">
     <title>Onboarding</title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="index.css">
-
 </head>
 
 <body>
 
     <div id="outer-dropzone" class="dropzone"></div>
 
-    <ul class="wrapper-activity-bar">
-        <li class="list-item"><img class="activity-icon" src="assets/icons/01_Sports.png" alt="Icon Sports" /></li>
-        <li class="list-item"><img class="activity-icon" src="assets/icons/02_Netflix_and_Chill.png" alt="Icon Netflix & Chill" /></li>
-        <li class="list-item"><img class="activity-icon" src="assets/icons/03_Drink.ico" alt="Icon Drink" /></li>
-        <li class="list-item"><img class="activity-icon" src="assets/icons/04_Eat.png" alt="Icon Eat" /></li>
-        <li class="list-item"><img class="activity-icon" src="assets/icons/05_Movies.png" alt="Icon Movies" /></li>
-        <li class="list-item"><img class="activity-icon" src="assets/icons/06_Music.png" alt="Icon Music" /></li>
-        <li class="list-item"><img class="activity-icon" src="assets/icons/07_Games.png" alt="Icon Games" /></li>
-        <li class="list-item"><img class="activity-icon" src="assets/icons/08_Shopping.png" alt="Icon Shopping" /></li>
-        <li class="list-item"><img class="activity-icon" src="assets/icons/09_Party.ico" alt="Icon Party" /></li>
-        <li class="list-item"><img class="activity-icon" src="assets/icons/10_Coffee.png" alt="Icon Coffee" /></li>
+    <ul class="wrapper-activity-bar container-icon">
+        <li class="list-item draggable drag-drop" data-id="1"><img class="activity-icon" src="assets/icons/01_Sports.png" alt="Icon Sports" /></li>
+        <li class="list-item draggable drag-drop" data-id="2"><img class="activity-icon" src="assets/icons/02_Netflix_and_Chill.png" alt="Icon Netflix & Chill" /></li>
+        <li class="list-item draggable drag-drop" data-id="3"><img class="activity-icon" src="assets/icons/03_Drink.ico" alt="Icon Drink" /></li>
+        <li class="list-item draggable drag-drop" data-id="4"><img class="activity-icon" src="assets/icons/04_Eat.png" alt="Icon Eat" /></li>
+        <li class="list-item draggable drag-drop" data-id="5"><img class="activity-icon" src="assets/icons/05_Movies.png" alt="Icon Movies" /></li>
+        <li class="list-item draggable drag-drop" data-id="6"><img class="activity-icon" src="assets/icons/06_Music.png" alt="Icon Music" /></li>
+        <li class="list-item draggable drag-drop" data-id="7"><img class="activity-icon" src="assets/icons/07_Games.png" alt="Icon Games" /></li>
+        <li class="list-item draggable drag-drop" data-id="8"><img class="activity-icon" src="assets/icons/08_Shopping.png" alt="Icon Shopping" /></li>
+        <li class="list-item draggable drag-drop" data-id="9"><img class="activity-icon" src="assets/icons/09_Party.ico" alt="Icon Party" /></li>
+        <li class="list-item draggable drag-drop" data-id="10"><img class="activity-icon" src="assets/icons/10_Coffee.png" alt="Icon Coffee" /></li>
     </ul>
 
     <script src="assets/js/jquery-3.1.1.min.js"></script>
@@ -94,6 +94,85 @@
             }
         });
 
+var selected = [];
+
+window.x = selected;
+
+// target elements with the "draggable" class
+interact('.draggable')
+  .draggable({
+    // enable inertial throwing
+    inertia: true,
+    // keep the element within the area of it's parent
+    restrict: {
+      endOnly: true,
+      elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+    },
+    // enable autoScroll
+    autoScroll: true,
+
+    // call this function on every dragmove event
+    onmove: dragMoveListener,
+    // call this function on every dragend event
+    onend: function (event) {
+      var textEl = event.target.querySelector('p'),
+        id = $(event.target).data('id')
+
+      // add to selected
+      if(event.hasOwnProperty('dropzone')) {
+        selected.push(id);
+        alert(selected);
+      } else {
+        // remove from selected
+        let idx = selected.indexOf(id);
+        if(idx > -1) {
+            selected.splice(idx, 1);
+        }
+      }
+
+      textEl && (textEl.textContent =
+        'moved a distance of '
+        + (Math.sqrt(event.dx * event.dx +
+                     event.dy * event.dy)|0) + 'px');
+    }
+  });
+
+  function dragMoveListener (event) {
+    var target = event.target,
+        // keep the dragged position in the data-x/data-y attributes
+        x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+    // translate the element
+    target.style.webkitTransform =
+    target.style.transform =
+      'translate(' + x + 'px, ' + y + 'px)';
+
+    // update the posiion attributes
+    target.setAttribute('data-x', x);
+    target.setAttribute('data-y', y);
+  }
+
+  // this is used later in the resizing and gesture demos
+  window.dragMoveListener = dragMoveListener;
+
+interact('.dropzone').dropzone({
+  // Require a 75% element overlap for a drop to be possible
+  overlap: 0.75,
+  // listen for drop related events:
+  ondropactivate: function (event) {
+    // add active dropzone feedback
+    event.target.classList.add('drop-active');
+  },
+  ondragenter: function (event) {
+  },
+  ondragleave: function (event) {
+  },
+  ondrop: function (event, e) {
+  },
+  ondropdeactivate: function (event) {
+  }
+});
     </script>
 </body>
 
