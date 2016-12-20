@@ -175,7 +175,28 @@
   });
 
   $('.submit').on('click', function() {
-    alert(selected);
+
+    var obj = {
+      name: localStorage.getItem('name'),
+      prefs: {},
+      lat: 47.72418 + ( (-1)**Math.floor(Math.random() * 2) * (Math.floor(Math.random() * 50)/10000)),
+      lng: 13.088291 + ( (-1)**Math.floor(Math.random() * 2) * (Math.floor(Math.random() * 50)/10000))
+    };
+
+    selected.forEach(function(pref) {
+      obj.prefs[pref] = true;
+    });
+
+    DB.createUser(obj, function(err, res) {
+      if(err){
+        alert(err);
+      } else {
+        // TODO: Save user ID to localStorage
+        console.log(err, res);
+        location.href = 'select.html'
+      }
+    });
+
   })
 
 </script>
